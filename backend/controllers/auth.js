@@ -72,13 +72,12 @@ async function login(req, res) {
       return res.status(400).json({ message: "Email or Password not provided" });
     }
 
-    // ✅ FIX 2: .select("+password") because select:false in schema
+    
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // ✅ Compare manually here
     const passwordMatch = bcrypt.compareSync(password, user.password);
     if (!passwordMatch) {
       return res.status(401).json({ error: "Invalid Credentials" });

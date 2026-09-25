@@ -6,6 +6,8 @@ import User from './models/user.js';
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import authRouter from './routes/authRoutes.js';
+import movieRoutes from "./routes/movieRoutes.js";
+import favouriteRoutes from "./routes/favouriteRoutes.js";
 
 const app=express();
 
@@ -23,7 +25,10 @@ connectDB();
 app.get("/",(req,res)=>{
     res.send("API is running fine");
 });
+
 app.use("/api/auth",authRouter);
+app.use("/api/movies", movieRoutes);
+app.use("/api/favourites", favouriteRoutes);
  
 app.listen(PORT,()=>{
     console.log(`Server is running on PORT ${PORT}`);
