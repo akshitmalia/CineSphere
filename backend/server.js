@@ -12,6 +12,7 @@ import favouriteRoutes from "./routes/favouriteRoutes.js";
 const app=express(); 
 
 app.use(express.json());
+app.use(cookieParser()); 
 const allowedOrigins = [
   "http://localhost:3000",
   "https://cinesphere-eip2.vercel.app" 
