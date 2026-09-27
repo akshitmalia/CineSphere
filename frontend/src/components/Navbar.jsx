@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
@@ -7,15 +7,31 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Reliable, reactive mobile detection — replaces the inline
+  // window.innerWidth checks that never updated on resize.
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia("(max-width: 767px)").matches
+      : false
+  );
+
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 767px)");
+    const handler = (e) => setIsMobile(e.matches);
+    mql.addEventListener("change", handler);
+    setIsMobile(mql.matches);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+
   const handleLogout = async () => {
     await logout();
     navigate("/");
   };
 
   return (
-    <>
+    <div style={{ position: "relative" }}>
       <nav style={{
-        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+        position: "sticky", top: 0, left: 0, right: 0, zIndex: 100,
         display: "flex", alignItems: "center", justifyContent: "space-between",
         padding: "1rem 1.5rem",
         backgroundColor: "rgba(10,10,15,0.95)",
@@ -31,113 +47,116 @@ const Navbar = () => {
           }}>CineSphere</h1>
         </Link>
 
-        {/* Desktop nav */}
-        <div style={{
-          display: "flex", alignItems: "center", gap: "1rem",
-          display: window.innerWidth < 768 ? "none" : "flex",
-        }}>
-          <Link to="/watchlist" style={{
-            padding: "0.5rem 1.2rem",
-            border: "1px solid #2a2a3a",
-            borderRadius: "8px",
-            color: "#f5f3ee",
-            textDecoration: "none",
-            fontSize: "0.85rem",
-            fontWeight: "600",
-            display: "flex", alignItems: "center", gap: "0.4rem",
-            transition: "border-color 0.2s",
-          }}
-            onMouseEnter={(e) => e.currentTarget.style.borderColor = "#e8b339"}
-            onMouseLeave={(e) => e.currentTarget.style.borderColor = "#2a2a3a"}
-          >
-            ❤️ Watchlist
-          </Link>
+        {/* Desktop nav — only rendered when NOT mobile, no more duplicate/conflicting display props */}
+        {!isMobile && (
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            <Link to="/watchlist" style={{
+              padding: "0.5rem 1.2rem",
+              border: "1px solid #2a2a3a",
+              borderRadius: "8px",
+              color: "#f5f3ee",
+              textDecoration: "none",
+              fontSize: "0.85rem",
+              fontWeight: "600",
+              display: "flex", alignItems: "center", gap: "0.4rem",
+              transition: "border-color 0.2s",
+            }}
+              onMouseEnter={(e) => e.currentTarget.style.borderColor = "#e8b339"}
+              onMouseLeave={(e) => e.currentTarget.style.borderColor = "#2a2a3a"}
+            >
+              ❤️ Watchlist
+            </Link>
 
-          <div style={{
-            display: "flex", alignItems: "center", gap: "0.75rem",
-            padding: "0.4rem 0.75rem",
-            backgroundColor: "#14141c",
-            border: "1px solid #2a2a3a",
-            borderRadius: "8px",
-          }}>
             <div style={{
-              width: "28px", height: "28px",
-              backgroundColor: "#e8b339",
-              borderRadius: "50%",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontWeight: "800", fontSize: "0.75rem", color: "#0a0a0f",
+              display: "flex", alignItems: "center", gap: "0.75rem",
+              padding: "0.4rem 0.75rem",
+              backgroundColor: "#14141c",
+              border: "1px solid #2a2a3a",
+              borderRadius: "8px",
             }}>
-              {user?.email?.[0]?.toUpperCase() || "U"}
+              <div style={{
+                width: "28px", height: "28px",
+                backgroundColor: "#e8b339",
+                borderRadius: "50%",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontWeight: "800", fontSize: "0.75rem", color: "#0a0a0f",
+              }}>
+                {user?.email?.[0]?.toUpperCase() || "U"}
+              </div>
+              <span style={{
+                color: "#8b8b9a", fontSize: "0.8rem",
+                maxWidth: "160px",
+                overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+              }}>
+                {user?.email}
+              </span>
             </div>
-            <span style={{
-              color: "#8b8b9a", fontSize: "0.8rem",
-              maxWidth: "160px",
-              overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-            }}>
-              {user?.email}
-            </span>
-          </div>
 
-          <button onClick={handleLogout} style={{
-            padding: "0.5rem 1.2rem",
-            backgroundColor: "transparent",
-            border: "1px solid #2a2a3a",
-            borderRadius: "8px",
-            color: "#8b8b9a",
-            fontSize: "0.85rem",
-            fontWeight: "600",
-            cursor: "pointer",
-            transition: "color 0.2s, border-color 0.2s",
-            fontFamily: "Manrope, sans-serif",
-          }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = "#ef4444";
-              e.currentTarget.style.borderColor = "#ef4444";
+            <button onClick={handleLogout} style={{
+              padding: "0.5rem 1.2rem",
+              backgroundColor: "transparent",
+              border: "1px solid #2a2a3a",
+              borderRadius: "8px",
+              color: "#8b8b9a",
+              fontSize: "0.85rem",
+              fontWeight: "600",
+              cursor: "pointer",
+              transition: "color 0.2s, border-color 0.2s",
+              fontFamily: "Manrope, sans-serif",
             }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = "#8b8b9a";
-              e.currentTarget.style.borderColor = "#2a2a3a";
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "#ef4444";
+                e.currentTarget.style.borderColor = "#ef4444";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = "#8b8b9a";
+                e.currentTarget.style.borderColor = "#2a2a3a";
+              }}
+            >
+              Logout
+            </button>
+          </div>
+        )}
+
+        {/* Mobile hamburger — only rendered when isMobile is true */}
+        {isMobile && (
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            style={{
+              display: "flex",
+              flexDirection: "column", gap: "5px",
+              background: "none", border: "none",
+              cursor: "pointer", padding: "0.5rem",
             }}
           >
-            Logout
+            <span style={{
+              display: "block", width: "22px", height: "2px",
+              backgroundColor: menuOpen ? "#e8b339" : "#f5f3ee",
+              transition: "all 0.3s",
+              transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none",
+            }} />
+            <span style={{
+              display: "block", width: "22px", height: "2px",
+              backgroundColor: menuOpen ? "#e8b339" : "#f5f3ee",
+              transition: "all 0.3s",
+              opacity: menuOpen ? 0 : 1,
+            }} />
+            <span style={{
+              display: "block", width: "22px", height: "2px",
+              backgroundColor: menuOpen ? "#e8b339" : "#f5f3ee",
+              transition: "all 0.3s",
+              transform: menuOpen ? "rotate(-45deg) translate(5px, -5px)" : "none",
+            }} />
           </button>
-        </div>
-
-        {/* Mobile hamburger */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          style={{
-            display: window.innerWidth >= 768 ? "none" : "flex",
-            flexDirection: "column", gap: "5px",
-            background: "none", border: "none",
-            cursor: "pointer", padding: "0.5rem",
-          }}
-        >
-          <span style={{
-            display: "block", width: "22px", height: "2px",
-            backgroundColor: menuOpen ? "#e8b339" : "#f5f3ee",
-            transition: "all 0.3s",
-            transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none",
-          }} />
-          <span style={{
-            display: "block", width: "22px", height: "2px",
-            backgroundColor: menuOpen ? "#e8b339" : "#f5f3ee",
-            transition: "all 0.3s",
-            opacity: menuOpen ? 0 : 1,
-          }} />
-          <span style={{
-            display: "block", width: "22px", height: "2px",
-            backgroundColor: menuOpen ? "#e8b339" : "#f5f3ee",
-            transition: "all 0.3s",
-            transform: menuOpen ? "rotate(-45deg) translate(5px, -5px)" : "none",
-          }} />
-        </button>
+        )}
       </nav>
 
-      {/* Mobile dropdown menu */}
-      {menuOpen && (
+      {/* Mobile dropdown menu — positioned relative to the wrapping div,
+          not a hardcoded "64px", so it always sits right below the nav
+          no matter how tall the nav actually renders. */}
+      {isMobile && menuOpen && (
         <div style={{
-          position: "fixed", top: "64px", left: 0, right: 0, zIndex: 99,
+          position: "absolute", top: "100%", left: 0, right: 0, zIndex: 99,
           backgroundColor: "#14141c",
           borderBottom: "1px solid #2a2a3a",
           padding: "1.25rem 1.5rem",
@@ -202,11 +221,11 @@ const Navbar = () => {
               textAlign: "left",
             }}
           >
-         Logout
+            Logout
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
