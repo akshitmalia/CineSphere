@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cookieParser()); 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://cinesphere-eip2.vercel.app" 
+  "https://cinesphere-psi.vercel.app" 
 ];
 
 app.use(cors({
