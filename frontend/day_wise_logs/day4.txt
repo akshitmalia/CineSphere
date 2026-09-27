@@ -1,0 +1,118 @@
+What the Frontend Will Actually Show
+Page 1 — Landing Page (public, no login needed)
+┌─────────────────────────────────────────┐
+│  CINESPHERE          [Login] [Sign Up]  │
+├─────────────────────────────────────────┤
+│                                         │
+│   Discover Movies                       │
+│   Without Limits                        │
+│                                         │
+│   [Get Started]                         │
+│                                         │
+│  [Movie Poster] [Movie Poster] ...      │  ← trending posters as decoration
+└─────────────────────────────────────────┘
+│  ✦ Search          ✦ Filter         ✦ Watchlist  │  ← features section
+
+What user sees: Dark Netflix-style hero, trending movie posters in background, two buttons — Login and Sign Up.
+
+Page 2 — Login / Register
+┌─────────────────────────────────────────┐
+│           CINESPHERE                    │
+│                                         │
+│       Welcome Back                      │
+│   ┌─────────────────────┐               │
+│   │ email               │               │
+│   ├─────────────────────┤               │
+│   │ password            │               │
+│   └─────────────────────┘               │
+│         [Login Button]                  │
+│   Don't have an account? Register       │
+└─────────────────────────────────────────┘
+
+What user sees: Clean centered form, dark background, gold accent button, switches between login/register.
+
+Page 3 — Search Page (main page after login)
+┌─────────────────────────────────────────┐
+│  CINESPHERE    [Search...]  [Watchlist] [Logout] │
+├─────────────────────────────────────────┤
+│                                         │
+│  FILTERS:                               │
+│  [Genre ▼] [Year ▼] [Language ▼] [⭐ Min Rating ▼] │
+│                                         │
+├─────────────────────────────────────────┤
+│                                         │
+│  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐    │
+│  │Poster│ │Poster│ │Poster│ │Poster│    │
+│  │      │ │      │ │      │ │      │    │
+│  │Title │ │Title │ │Title │ │Title │    │
+│  │⭐7.8 │ │⭐8.1 │ │⭐6.9 │ │⭐7.2 │  │
+│  └──────┘ └──────┘ └──────┘ └──────┘    │
+│                                         │
+│  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐    │
+│  │Poster│ │Poster│ │Poster│ │Poster│    │
+│  ...                                    │
+│                                         │
+│     [← 1  2  3  4  5 →]               │  ← pagination
+└─────────────────────────────────────────┘
+
+Filters user can apply:
+
+Filter	Example values
+Genre	Action, Comedy, Horror, Drama, Sci-Fi, Romance
+Year	2024, 2023, 2022... all the way back
+Language	English, Hindi, Korean, Spanish, French, Japanese
+Min Rating	6+, 7+, 8+, 9+ (IMDb-style score from TMDb)
+
+All filters work together — so user can say "Show me Hindi Action movies from 2023 rated 7+" and it works in one search. Each movie card shows poster, title, rating, year. Clicking a card goes to details page.
+
+Page 4 — Movie Details Page
+┌─────────────────────────────────────────┐
+│  [Dark backdrop image fills top]        │
+│                                         │
+│  ┌───────┐  The Dark Knight             │
+│  │Poster │  2008 • Action • 152 min     │
+│  │       │  ⭐ 9.0 • English            │
+│  │       │                              │
+│  └───────┘  Batman raises the stakes... │
+│             [▶ Watch Trailer]  [+ Watchlist] │
+├─────────────────────────────────────────┤
+│  CAST                                   │
+│  [Photo] [Photo] [Photo] [Photo]...     │
+│  Christian  Heath   Aaron   Michael     │
+│  Bale       Ledger  Eckhart Caine       │
+├─────────────────────────────────────────┤
+│  ▶ TRAILER                             │
+│  ┌─────────────────────────────────┐    │
+│  │     YouTube embed plays here    │    │
+│  └─────────────────────────────────┘    │
+└─────────────────────────────────────────┘
+
+What user sees: Full backdrop hero, movie info, cast photos with names, embedded YouTube trailer, add to watchlist button that turns gold when saved.
+
+Page 5 — Watchlist Page
+┌─────────────────────────────────────────┐
+│  CINESPHERE              [← Back]       │
+├─────────────────────────────────────────┤
+│  My Watchlist (4 movies)               │
+│                                         │
+│  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐  │
+│  │Poster│ │Poster│ │Poster│ │Poster│  │
+│  │      │ │      │ │      │ │      │  │
+│  │Title │ │Title │ │Title │ │Title │  │
+│  │⭐8.1 │ │⭐7.4 │ │⭐9.0 │ │⭐6.8 │  │
+│  │[✕ Remove]    [✕ Remove]             │
+│  └──────┘ └──────┘ └──────┘ └──────┘  │
+└─────────────────────────────────────────┘
+
+What user sees: All their saved movies loaded from MongoDB (no extra API calls — we saved the snapshot). Remove button on each card.
+
+Complete user journey
+Landing → clicks "Get Started"
+  → Register/Login
+    → Search page loads with trending movies by default
+      → User applies filters (genre + year + rating)
+        → Clicks a movie card
+          → Movie details page (trailer, cast, info)
+            → Clicks "+ Watchlist" → saved to MongoDB
+              → Goes to Watchlist → sees all saved movies
+                → Can remove any movie

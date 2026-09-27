@@ -1,0 +1,58 @@
+Step 1 — Project Setup              ← START HERE
+  ✦ Create Vite + React project
+  ✦ Install Tailwind CSS
+  ✦ Install axios + react-router-dom
+  ✦ Set up folder structure
+  ✦ axios.js with silent refresh
+  ✦ AuthContext + useAuth hook
+  ✦ ProtectedRoute component
+  ✦ App.jsx with all routes
+  ✦ main.jsx entry point
+  → TEST: npm run dev shows blank page, no errors in console
+
+Step 2 — Login + Register Pages
+  ✦ Login.jsx form
+  ✦ Register.jsx form
+  ✦ Navbar.jsx basic version
+  → TEST: Can register + login, gets redirected to search page
+
+Step 3 — Landing Page
+  ✦ Hero section with dark background
+  ✦ Trending movies as backdrop posters
+  ✦ Login + Register buttons
+  ✦ Features section
+  → TEST: Looks good, buttons navigate correctly
+
+Step 4 — Search Page
+  ✦ FilterBar (genre, year, language, rating)
+  ✦ MovieCard component
+  ✦ Movie grid
+  ✦ Pagination
+  ✦ Debounced search input
+  → TEST: Search batman, filters work together
+
+Step 5 — Movie Details Page
+  ✦ Backdrop hero image
+  ✦ Movie info (title, rating, runtime)
+  ✦ Cast row with photos
+  ✦ YouTube trailer embed
+  ✦ Add to watchlist button
+  → TEST: Click a movie, see details + trailer plays
+
+Step 6 — Watchlist Page
+  ✦ Grid of saved movies from MongoDB
+  ✦ Remove button per card
+  → TEST: Add movie, go to watchlist, remove it
+
+Step 7 — Polish
+  ✦ Skeleton loaders
+  ✦ Toast notifications
+  ✦ Mobile responsive fixes
+  ✦ Error handling
+  → TEST: Full flow works on mobile screen size
+
+Step 8 — Deploy
+  ✦ Frontend → Vercel
+  ✦ Backend → Render
+  ✦ Update env variables
+  → TEST: Live URL works end to end

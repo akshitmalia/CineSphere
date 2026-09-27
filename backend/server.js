@@ -5,7 +5,7 @@ import connectDB from './config/db.js';
 import User from './models/user.js';
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import authRouter from './routes/authRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 import movieRoutes from "./routes/movieRoutes.js";
 import favouriteRoutes from "./routes/favouriteRoutes.js";
 
@@ -26,7 +26,7 @@ app.get("/",(req,res)=>{
     res.send("API is running fine");
 });
 
-app.use("/api/auth",authRouter);
+app.use("/api/auth",authRoutes);
 app.use("/api/movies", movieRoutes);
 app.use("/api/favourites", favouriteRoutes);
  

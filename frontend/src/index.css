@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+@theme {
+  /* ── Colors ── */
+  --color-bg:             #0a0a0f;
+  --color-surface:        #14141c;
+  --color-surface-hover:  #1c1c28;
+  --color-gold:           #e8b339;
+  --color-gold-dark:      #c99a2e;
+  --color-violet:         #6c5ce7;
+  --color-text:           #f5f3ee;
+  --color-muted:          #8b8b9a;
+  --color-border:         #2a2a3a;
+
+  /* ── Fonts ── */
+  --font-display: "Bebas Neue", sans-serif;
+  --font-body:    "Manrope", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #0a0a0f;
+  color: #f5f3ee;
+  font-family: "Manrope", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Focus ring for accessibility */
+:focus-visible {
+  outline: 2px solid #e8b339;
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: #0a0a0f; }
+::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #e8b339; }
