@@ -9,12 +9,12 @@ import authRoutes from './routes/authRoutes.js';
 import movieRoutes from "./routes/movieRoutes.js";
 import favouriteRoutes from "./routes/favouriteRoutes.js";
 
-const app=express();
+const app=express(); 
 
 app.use(express.json());
 app.use(cookieParser()); // CRITICAL: Allows your app to read incoming refresh token cookies
 app.use(cors({
-  origin: "http://localhost:3000", // Replace with your frontend URL later
+  origin: "https://cinesphere-psi.vercel.app/", // Replace with your frontend URL later
   credentials: true // CRITICAL: Allows cross-origin cookies to flow back and forth
 }));
 const PORT=5000;
