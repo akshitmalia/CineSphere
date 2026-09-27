@@ -12,9 +12,19 @@ import favouriteRoutes from "./routes/favouriteRoutes.js";
 const app=express(); 
 
 app.use(express.json());
-app.use(cookieParser()); // CRITICAL: Allows your app to read incoming refresh token cookies
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://cinesphere-eip2.vercel.app" 
+];
+
 app.use(cors({
-  origin: process.env.CLIENT_URL,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
 const PORT=5000;
