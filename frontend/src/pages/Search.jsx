@@ -57,7 +57,7 @@ const Search = () => {
   const [totalResults, setTotalResults] = useState(0);
   const [genres, setGenres]     = useState([]);
   const [favouriteIds, setFavouriteIds] = useState(new Set());
-  const [loading, setLoading]   = useState(false);
+  const [loading, setLoading]   = useState(true);
   const [error, setError]       = useState("");
 
   const debounceRef = useRef(null);
@@ -322,7 +322,7 @@ const Search = () => {
           )}
 
           {/* Empty state */}
-          {!loading && !error && movies.length === 0 && (
+          {!loading && !error && movies.length === 0 && totalResults === 0 && (
             <div style={{ textAlign: "center", padding: "6rem 2rem" }}>
               <div style={{ fontSize: "4rem", marginBottom: "1rem" }}>🎬</div>
               <h3 style={{ color: "#f5f3ee", fontSize: "1.3rem", marginBottom: "0.5rem" }}>
