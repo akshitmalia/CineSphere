@@ -14,8 +14,8 @@ const app=express();
 app.use(express.json());
 app.use(cookieParser()); // CRITICAL: Allows your app to read incoming refresh token cookies
 app.use(cors({
-  origin: "https://cinesphere-psi.vercel.app/", // Replace with your frontend URL later
-  credentials: true // CRITICAL: Allows cross-origin cookies to flow back and forth
+  origin: process.env.CLIENT_URL,
+  credentials: true
 }));
 const PORT=5000;
 
