@@ -348,7 +348,7 @@ const Search = () => {
             display: "flex",
             flexDirection: "column",
             gap: "0.65rem",
-            zIndex: 5,
+            zIndex: 999,
           }}>
             <select value={genre} onChange={(e) => handleFilterChange(setGenre)(e.target.value)} style={selectStyle}>
               <option value="">All Genres</option>
